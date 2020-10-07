@@ -18,14 +18,19 @@ namespace BootStrapMVCDev.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            return View();
+            return View("NavBar01View");
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public String LinkOption1()
+        {
+            return "LinkOption1 is here";
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
