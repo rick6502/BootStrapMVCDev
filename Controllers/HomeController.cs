@@ -18,9 +18,20 @@ namespace BootStrapMVCDev.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            return View();
+            return View("Modal01View");
+        }
+
+        public String LinkOption1()
+        {
+            return "LinkOption1 is here";
+        }
+
+
+        public String ModalFormAction()
+        {
+            return "ModalFormAction is here. firstName: " + HttpContext.Request.Form["firstName"];
         }
 
         public IActionResult Privacy()
