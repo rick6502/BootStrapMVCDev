@@ -26,32 +26,58 @@ namespace BootStrapMVCDev.Controllers
             Configuration = _configuration;
         }
 
-        //public ViewResult Index()
-        public String Index()
+        //public String Index()
+        //{
+
+        //    // https://stackoverflow.com/questions/38778183/retrieving-connection-string-from-environment-variables
+        //    // ConnectionStrings:DefaultConnection=Server=(localdb)\\MSSQLLocalDB;Database=_CHANGE_ME_ENV;Trusted_Connection=True;MultipleActiveResultSets=true
+        //    //
+        //    string connString = this.Configuration.GetConnectionString("DefaultConnection");
+
+
+        //    StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
+        //    StaffList aList = staffTableDAC.GetStaffList();
+        //    string s1 = string.Empty;
+        //    foreach (Staff aItem in aList)
+        //    {
+        //        s1 += aItem.UserID + " " + aItem.PersonnelName + "\n";
+        //    }
+
+        //    return s1;
+        //}
+
+        public ViewResult Index()
         {
-            //            return View("Modal01View");
-
-            // https://stackoverflow.com/questions/38778183/retrieving-connection-string-from-environment-variables
-            // ConnectionStrings:DefaultConnection=Server=(localdb)\\MSSQLLocalDB;Database=_CHANGE_ME_ENV;Trusted_Connection=True;MultipleActiveResultSets=true
-            //
-            string connString = this.Configuration.GetConnectionString("DefaultConnection");
-
-
-            StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
-            StaffList aList = staffTableDAC.GetStaffList();
-            string s1 = string.Empty;
-            foreach (Staff aItem in aList)
-            {
-                s1 += aItem.UserID + " " + aItem.PersonnelName + "\n";
-            }
-
-            return s1;
+            return View("Modal01View");
         }
 
 
         public String ModalFormAction()
         {
-            return "ModalFormAction is here. firstName: " + HttpContext.Request.Form["firstName"];
+            string connString = this.Configuration.GetConnectionString("DefaultConnection");
+
+            StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
+            string userID = HttpContext.Request.Form["userid"], password = HttpContext.Request.Form["password"];
+            bool okUserID = staffTableDAC.CheckUserID(userID, password);
+
+            string idMessage = string.Empty;
+            if (okUserID)
+            {
+                idMessage = "ID is OK";
+            }
+            else
+            {
+                idMessage = "ID is nope";
+            }
+
+
+            string str1 = HttpContext.Request.Form["firstName"] + " " + HttpContext.Request.Form["lastName"];
+            str1 = str1 + "\n" + connString;
+            str1 = str1 + "\n" + userID + " "+password;
+            str1 = str1 + "\n" + idMessage;
+
+
+            return "ModalFormAction is here. firstName: " +str1;
         }
 
         public IActionResult Privacy()

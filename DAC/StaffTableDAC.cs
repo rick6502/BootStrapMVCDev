@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using BootStrapMVCDev.Models;
+using System.Data;
 
 namespace BootStrapMVCDev.DAC
 {
@@ -51,6 +52,28 @@ namespace BootStrapMVCDev.DAC
                 reader.Close();
             }
             return aList;
+        }
+
+        public Boolean CheckUserID(string userid, string pasword)
+        {
+            Boolean rCode = false;
+            string query = "Select * from tblstaff x1 where x1.userid = @userid and x1.password = @password";
+            using (var DBConn = DBConnectionSQL)
+            {
+                SqlCommand cmd = new SqlCommand(query, DBConn);
+                cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.VarChar));
+                cmd.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
+                cmd.Parameters["@userid"].Value = userid;
+                cmd.Parameters["@password"].Value = pasword;
+                DBConn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    rCode = true;
+                }
+                reader.Close();
+            }
+            return rCode;
         }
 
     }
