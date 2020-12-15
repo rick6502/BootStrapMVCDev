@@ -32,8 +32,12 @@ namespace BootStrapMVCDev.Controllers
         //    // https://stackoverflow.com/questions/38778183/retrieving-connection-string-from-environment-variables
         //    // ConnectionStrings:DefaultConnection=Server=(localdb)\\MSSQLLocalDB;Database=_CHANGE_ME_ENV;Trusted_Connection=True;MultipleActiveResultSets=true
         //    //
+        //    string connString1 = this.Configuration.GetConnectionString("DefaultConnection");
+        //    string connString2 = this.Configuration.GetConnectionString("DefaultConnection2");
         //    string connString = this.Configuration.GetConnectionString("DefaultConnection");
+        //    //string connString = "SERVER = VMS02-2; DATABASE = datBigsql; Trusted_Connection = yes;";
 
+        //    //return connString1+"\n"+ connString2 + "\n" + connString;
 
         //    StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
         //    StaffList aList = staffTableDAC.GetStaffList();
@@ -42,7 +46,6 @@ namespace BootStrapMVCDev.Controllers
         //    {
         //        s1 += aItem.UserID + " " + aItem.PersonnelName + "\n";
         //    }
-
         //    return s1;
         //}
 
@@ -70,14 +73,11 @@ namespace BootStrapMVCDev.Controllers
                 idMessage = "ID is nope";
             }
 
-
             string str1 = HttpContext.Request.Form["firstName"] + " " + HttpContext.Request.Form["lastName"];
-            str1 = str1 + "\n" + connString;
-            str1 = str1 + "\n" + userID + " "+password;
             str1 = str1 + "\n" + idMessage;
 
 
-            return "ModalFormAction is here. firstName: " +str1;
+            return "ModalFormAction is here. firstName: " + str1;
         }
 
         public IActionResult Privacy()
