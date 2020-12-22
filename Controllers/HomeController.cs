@@ -26,59 +26,60 @@ namespace BootStrapMVCDev.Controllers
             Configuration = _configuration;
         }
 
-        //public String Index()
-        //{
-
-        //    // https://stackoverflow.com/questions/38778183/retrieving-connection-string-from-environment-variables
-        //    // ConnectionStrings:DefaultConnection=Server=(localdb)\\MSSQLLocalDB;Database=_CHANGE_ME_ENV;Trusted_Connection=True;MultipleActiveResultSets=true
-        //    //
-        //    string connString1 = this.Configuration.GetConnectionString("DefaultConnection");
-        //    string connString2 = this.Configuration.GetConnectionString("DefaultConnection2");
-        //    string connString = this.Configuration.GetConnectionString("DefaultConnection");
-        //    //string connString = "SERVER = VMS02-2; DATABASE = datBigsql; Trusted_Connection = yes;";
-
-        //    //return connString1+"\n"+ connString2 + "\n" + connString;
-
-        //    StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
-        //    StaffList aList = staffTableDAC.GetStaffList();
-        //    string s1 = string.Empty;
-        //    foreach (Staff aItem in aList)
-        //    {
-        //        s1 += aItem.UserID + " " + aItem.PersonnelName + "\n";
-        //    }
-        //    return s1;
-        //}
-
-        public ViewResult Index()
+        public String Index()
         {
-            return View("Modal01View");
-        }
 
+            // https://stackoverflow.com/questions/38778183/retrieving-connection-string-from-environment-variables
+            // ConnectionStrings:DefaultConnection=Server=(localdb)\\MSSQLLocalDB;Database=_CHANGE_ME_ENV;Trusted_Connection=True;MultipleActiveResultSets=true
+            //
+            string connString1 = this.Configuration.GetConnectionString("DefaultConnection");
+            string connString2 = this.Configuration.GetConnectionString("DefaultConnection2");
+            string connString3 = this.Configuration.GetConnectionString("DefaultConnection3");
+            string connString = this.Configuration.GetConnectionString("DefaultConnection3");
+            //string connString = "SERVER = VMS02-2; DATABASE = datBigsql; Trusted_Connection = yes;";
 
-        public String ModalFormAction()
-        {
-            string connString = this.Configuration.GetConnectionString("DefaultConnection");
+            //return connString1+"\n"+ connString2 + "\n" + connString3 + "\n" + connString; ;
 
             StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
-            string userID = HttpContext.Request.Form["userid"], password = HttpContext.Request.Form["password"];
-            bool okUserID = staffTableDAC.CheckUserID(userID, password);
-
-            string idMessage = string.Empty;
-            if (okUserID)
+            StaffList aList = staffTableDAC.GetStaffList();
+            string s1 = string.Empty;
+            foreach (Staff aItem in aList)
             {
-                idMessage = "ID is OK";
+                s1 += aItem.UserID + " " + aItem.PersonnelName + "\n";
             }
-            else
-            {
-                idMessage = "ID is nope";
-            }
-
-            string str1 = HttpContext.Request.Form["firstName"] + " " + HttpContext.Request.Form["lastName"];
-            str1 = str1 + "\n" + idMessage;
-
-
-            return "ModalFormAction is here. firstName: " + str1;
+            return s1;
         }
+
+        //public ViewResult Index()
+        //{
+        //    return View("Modal01View");
+        //}
+
+
+        //public String ModalFormAction()
+        //{
+        //    string connString = this.Configuration.GetConnectionString("DefaultConnection");
+
+        //    StaffTableDAC staffTableDAC = new StaffTableDAC(connString);
+        //    string userID = HttpContext.Request.Form["userid"], password = HttpContext.Request.Form["password"];
+        //    bool okUserID = staffTableDAC.CheckUserID(userID, password);
+
+        //    string idMessage = string.Empty;
+        //    if (okUserID)
+        //    {
+        //        idMessage = "ID is OK";
+        //    }
+        //    else
+        //    {
+        //        idMessage = "ID is nope";
+        //    }
+
+        //    string str1 = HttpContext.Request.Form["firstName"] + " " + HttpContext.Request.Form["lastName"];
+        //    str1 = str1 + "\n" + idMessage;
+
+
+        //    return "ModalFormAction is here. firstName: " + str1;
+        //}
 
         public IActionResult Privacy()
         {
